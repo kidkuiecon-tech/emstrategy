@@ -270,17 +270,16 @@ tr:nth-child(even) td {
   <section class="subbar">
     <div class="page-title">
       <strong id="activeTitle">Macro Economic Overview</strong>
-      <span id="activeDesc">GDP Growth, Inflation and PMI monitor</span>
+      <span id="activeDesc">GDP Growth, Inflation and Policy Rate monitor</span>
     </div>
     <div class="actions">
-      <a class="btn" id="openStandalone" href="macro.html" target="_blank">Open standalone</a>
+      <a class="btn" id="openStandalone" href="https://kidkuiecon-tech.github.io/em-macro/" target="_blank">Open standalone</a>
       <button class="btn primary" onclick="reloadActive()">Refresh tab</button>
     </div>
   </section>
 
-
   <section class="routebar">
-    <span><b>Routing:</b> Macro → macro.html</span>
+    <span><b>Routing:</b> Macro → external repo em-macro</span>
     <span>Fund Flows → external repo em-wfii</span>
     <span>FI Returns → external repo em_fi</span>
     <span>Opinions → opinions.html</span>
@@ -289,18 +288,8 @@ tr:nth-child(even) td {
   <main class="content">
     <section id="tab-macro" class="tab-panel active">
       <div class="module-frame">
-        <!-- Replace macro.html with your final Macro dashboard file. -->
-        <iframe id="frame-macro" src="macro.html" title="Macro Economic Overview"
-          onerror="showPlaceholder('macro')"></iframe>
-        <div id="placeholder-macro" class="placeholder" style="display:none">
-          <h2>Macro Economic Overview</h2>
-          <p class="note">This is the Macro tab. Upload or create <b>macro.html</b> in the same repo to show the full dashboard here.</p>
-          <div class="placeholder-grid">
-            <div class="card"><div class="label">GDP Growth</div><div class="value">Country View</div><div class="sub">GDP YoY / QoQ by region and country</div></div>
-            <div class="card"><div class="label">Inflation</div><div class="value">Pressure</div><div class="sub">Headline, core and food-energy risk</div></div>
-            <div class="card"><div class="label">PMI</div><div class="value">Cycle</div><div class="sub">Manufacturing PMI above or below 50</div></div>
-          </div>
-        </div>
+        <!-- Macro currently hosted in separate repo: https://kidkuiecon-tech.github.io/em-macro/ -->
+        <iframe id="frame-macro" src="https://kidkuiecon-tech.github.io/em-macro/" title="Macro Economic Overview"></iframe>
       </div>
     </section>
 
@@ -331,8 +320,8 @@ tr:nth-child(even) td {
 const tabMeta = {
   macro: {
     title: 'Macro Economic Overview',
-    desc: 'GDP Growth, Inflation and PMI monitor',
-    href: 'macro.html'
+    desc: 'GDP Growth, Inflation and Policy Rate monitor',
+    href: 'https://kidkuiecon-tech.github.io/em-macro/'
   },
   flows: {
     title: 'Fund Flows',
