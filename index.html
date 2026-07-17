@@ -226,13 +226,6 @@ tr:nth-child(even) td {
   font-size:12px;
   color:var(--muted);
 }
-@media(max-width:900px) {
-  .nav,.subbar { align-items:flex-start; flex-direction:column; }
-  .content { padding:14px; }
-  .placeholder-grid { grid-template-columns:1fr; }
-  iframe { height:calc(100vh - 255px); }
-}
-
 .routebar {
   display:flex;
   gap:14px;
@@ -247,7 +240,12 @@ tr:nth-child(even) td {
   display:inline-flex;
   align-items:center;
 }
-
+@media(max-width:900px) {
+  .nav,.subbar { align-items:flex-start; flex-direction:column; }
+  .content { padding:14px; }
+  .placeholder-grid { grid-template-columns:1fr; }
+  iframe { height:calc(100vh - 255px); }
+}
 </style>
 </head>
 <body>
@@ -256,12 +254,13 @@ tr:nth-child(even) td {
     <nav class="nav">
       <div class="brand">
         <div class="brand-title">EM Strategy Monitor</div>
-        <div class="brand-sub">Macro • Fund Flows • FI Returns • Opinions</div>
+        <div class="brand-sub">Macro • Fund Flows • Fixed Income Index • Rates &amp; Bond • Opinions</div>
       </div>
       <div class="tabs" role="tablist">
         <button class="tab-btn active" data-tab="macro" onclick="openTab('macro')">Macro</button>
         <button class="tab-btn" data-tab="flows" onclick="openTab('flows')">Fund Flows</button>
-        <button class="tab-btn" data-tab="fi" onclick="openTab('fi')">FI Returns</button>
+        <button class="tab-btn" data-tab="fi" onclick="openTab('fi')">Fix Income Index</button>
+        <button class="tab-btn" data-tab="rates" onclick="openTab('rates')">Rates &amp; Bond</button>
         <button class="tab-btn" data-tab="opinions" onclick="openTab('opinions')">Opinions</button>
       </div>
     </nav>
@@ -273,7 +272,7 @@ tr:nth-child(even) td {
       <span id="activeDesc">GDP Growth, Inflation and Policy Rate monitor</span>
     </div>
     <div class="actions">
-      <a class="btn" id="openStandalone" href="https://kidkuiecon-tech.github.io/em-macro/" target="_blank">Open standalone</a>
+      <a class="btn" id="openStandalone" href="https://kidkuiecon-tech.github.io/em-macro/" target="_blank" rel="noopener">Open standalone</a>
       <button class="btn primary" onclick="reloadActive()">Refresh tab</button>
     </div>
   </section>
@@ -281,35 +280,38 @@ tr:nth-child(even) td {
   <section class="routebar">
     <span><b>Routing:</b> Macro → external repo em-macro</span>
     <span>Fund Flows → external repo em-wfii</span>
-    <span>FI Returns → external repo em_fi</span>
+    <span>Fixed Income Index → external repo em_fi</span>
+    <span>Rates &amp; Bond → external repo em-govbond</span>
     <span>Opinions → opinions.html</span>
   </section>
 
   <main class="content">
     <section id="tab-macro" class="tab-panel active">
       <div class="module-frame">
-        <!-- Macro currently hosted in separate repo: https://kidkuiecon-tech.github.io/em-macro/ -->
         <iframe id="frame-macro" src="https://kidkuiecon-tech.github.io/em-macro/" title="Macro Economic Overview"></iframe>
       </div>
     </section>
 
     <section id="tab-flows" class="tab-panel">
       <div class="module-frame">
-        <!-- Fund Flows currently hosted in separate repo: https://kidkuiecon-tech.github.io/em-wfii/ -->
         <iframe id="frame-flows" src="https://kidkuiecon-tech.github.io/em-wfii/" title="Fund Flows"></iframe>
       </div>
     </section>
 
     <section id="tab-fi" class="tab-panel">
       <div class="module-frame">
-        <!-- FI Returns currently hosted in separate repo: https://kidkuiecon-tech.github.io/em_fi/ -->
-        <iframe id="frame-fi" src="https://kidkuiecon-tech.github.io/em_fi/" title="FI Returns"></iframe>
+        <iframe id="frame-fi" src="https://kidkuiecon-tech.github.io/em_fi/" title="Fixed Income Index"></iframe>
+      </div>
+    </section>
+
+    <section id="tab-rates" class="tab-panel">
+      <div class="module-frame">
+        <iframe id="frame-rates" src="https://kidkuiecon-tech.github.io/em-govbond/" title="Rates and Bond"></iframe>
       </div>
     </section>
 
     <section id="tab-opinions" class="tab-panel">
       <div class="module-frame">
-        <!-- Replace opinions.html with your strategy opinions page. -->
         <iframe id="frame-opinions" src="opinions.html" title="Opinions"></iframe>
       </div>
     </section>
@@ -329,9 +331,14 @@ const tabMeta = {
     href: 'https://kidkuiecon-tech.github.io/em-wfii/'
   },
   fi: {
-    title: 'FI Returns',
+    title: 'Fixed Income Index',
     desc: 'EM Fixed Income returns, composition and duration',
     href: 'https://kidkuiecon-tech.github.io/em_fi/'
+  },
+  rates: {
+    title: 'Rates & Bond',
+    desc: 'Government bond yields, yield curves, total returns and FX-adjusted performance',
+    href: 'https://kidkuiecon-tech.github.io/em-govbond/'
   },
   opinions: {
     title: 'Opinions',
@@ -341,9 +348,12 @@ const tabMeta = {
 };
 
 function openTab(tab) {
+  if (!tabMeta[tab]) return;
+
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.tab === tab);
   });
+
   document.querySelectorAll('.tab-panel').forEach(panel => {
     panel.classList.toggle('active', panel.id === 'tab-' + tab);
   });
@@ -356,9 +366,15 @@ function openTab(tab) {
 }
 
 function reloadActive() {
-  const active = document.querySelector('.tab-btn.active').dataset.tab;
+  const activeButton = document.querySelector('.tab-btn.active');
+  if (!activeButton) return;
+
+  const active = activeButton.dataset.tab;
   const frame = document.getElementById('frame-' + active);
-  if (frame) frame.src = frame.src;
+
+  if (frame) {
+    frame.src = frame.src;
+  }
 }
 
 function initFromHash() {
