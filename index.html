@@ -246,6 +246,137 @@ tr:nth-child(even) td {
   .placeholder-grid { grid-template-columns:1fr; }
   iframe { height:calc(100vh - 255px); }
 }
+
+/* Single-scroll embedding for dashboards that support auto height */
+.auto-height-frame {
+  height:900px;
+  min-height:700px;
+  overflow:hidden;
+}
+
+#tab-rates .module-frame {
+  min-height:0;
+  overflow:visible;
+}
+
+#tab-rates.tab-panel.active {
+  overflow:visible;
+}
+
+#tab-rates .module-frame,
+#tab-rates iframe {
+  border-radius:14px;
+}
+
+body {
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+
+
+/* Single-scroll auto-height iframe support */
+.auto-height-frame {
+  height:900px;
+  min-height:600px;
+  overflow:hidden;
+}
+
+.tab-panel .module-frame {
+  overflow:visible;
+}
+
+body {
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+
+
+#frame-macro {
+  overflow:hidden !important;
+  scrollbar-width:none !important;
+}
+
+#frame-macro::-webkit-scrollbar {
+  display:none !important;
+}
+
+#tab-macro .module-frame {
+  overflow:hidden !important;
+}
+
+
+/* Macro iframe: zero internal scrollbars */
+#tab-macro,
+#tab-macro .module-frame,
+#frame-macro {
+  overflow:hidden !important;
+  scrollbar-width:none !important;
+  -ms-overflow-style:none !important;
+}
+
+#frame-macro {
+  width:100% !important;
+  border:0 !important;
+  display:block !important;
+}
+
+#tab-macro::-webkit-scrollbar,
+#tab-macro .module-frame::-webkit-scrollbar,
+#frame-macro::-webkit-scrollbar {
+  display:none !important;
+  width:0 !important;
+  height:0 !important;
+}
+
+
+/* FI iframe: single-scroll integration */
+#tab-fi,
+#tab-fi .module-frame,
+#frame-fi {
+  overflow:visible !important;
+  scrollbar-width:none !important;
+  -ms-overflow-style:none !important;
+}
+
+#frame-fi {
+  width:100% !important;
+  border:0 !important;
+  display:block !important;
+}
+
+#tab-fi::-webkit-scrollbar,
+#tab-fi .module-frame::-webkit-scrollbar,
+#frame-fi::-webkit-scrollbar {
+  display:none !important;
+  width:0 !important;
+  height:0 !important;
+}
+
+
+/* Fund Flows iframe: remove nested scrollbars */
+#tab-flows,
+#tab-flows .module-frame,
+#frame-flows {
+  overflow:hidden !important;
+  scrollbar-width:none !important;
+  -ms-overflow-style:none !important;
+}
+
+#frame-flows {
+  width:100% !important;
+  min-height:900px;
+  border:0 !important;
+  display:block !important;
+}
+
+#tab-flows::-webkit-scrollbar,
+#tab-flows .module-frame::-webkit-scrollbar,
+#frame-flows::-webkit-scrollbar {
+  display:none !important;
+  width:0 !important;
+  height:0 !important;
+}
+
 </style>
 </head>
 <body>
@@ -254,13 +385,13 @@ tr:nth-child(even) td {
     <nav class="nav">
       <div class="brand">
         <div class="brand-title">EM Strategy Monitor</div>
-        <div class="brand-sub">Macro • Fund Flows • Fixed Income Index • Rates &amp; Bond • Opinions</div>
+        <div class="brand-sub">Macro • Fund Flows • FI Returns • EM Rates &amp; Bond • Opinions</div>
       </div>
       <div class="tabs" role="tablist">
         <button class="tab-btn active" data-tab="macro" onclick="openTab('macro')">Macro</button>
         <button class="tab-btn" data-tab="flows" onclick="openTab('flows')">Fund Flows</button>
-        <button class="tab-btn" data-tab="fi" onclick="openTab('fi')">Fix Income Index</button>
-        <button class="tab-btn" data-tab="rates" onclick="openTab('rates')">Rates &amp; Bond</button>
+        <button class="tab-btn" data-tab="fi" onclick="openTab('fi')">FI Returns</button>
+        <button class="tab-btn" data-tab="rates" onclick="openTab('rates')">EM Rates &amp; Bond</button>
         <button class="tab-btn" data-tab="opinions" onclick="openTab('opinions')">Opinions</button>
       </div>
     </nav>
@@ -280,33 +411,33 @@ tr:nth-child(even) td {
   <section class="routebar">
     <span><b>Routing:</b> Macro → external repo em-macro</span>
     <span>Fund Flows → external repo em-wfii</span>
-    <span>Fixed Income Index → external repo em_fi</span>
-    <span>Rates &amp; Bond → external repo em-govbond</span>
+    <span>FI Returns → external repo em_fi</span>
+    <span>EM Rates &amp; Bond → external repo em-govbond</span>
     <span>Opinions → opinions.html</span>
   </section>
 
   <main class="content">
     <section id="tab-macro" class="tab-panel active">
       <div class="module-frame">
-        <iframe id="frame-macro" src="https://kidkuiecon-tech.github.io/em-macro/" title="Macro Economic Overview"></iframe>
+        <iframe id="frame-macro" class="auto-height-frame" scrolling="no" src="https://kidkuiecon-tech.github.io/em-macro/?embed=1" title="Macro Economic Overview" scrolling="no"></iframe>
       </div>
     </section>
 
     <section id="tab-flows" class="tab-panel">
       <div class="module-frame">
-        <iframe id="frame-flows" src="https://kidkuiecon-tech.github.io/em-wfii/" title="Fund Flows"></iframe>
+        <iframe id="frame-flows" class="auto-height-frame" src="https://kidkuiecon-tech.github.io/em-wfii/?embed=1" title="Fund Flows" scrolling="no"></iframe>
       </div>
     </section>
 
     <section id="tab-fi" class="tab-panel">
       <div class="module-frame">
-        <iframe id="frame-fi" src="https://kidkuiecon-tech.github.io/em_fi/" title="Fixed Income Index"></iframe>
+        <iframe id="frame-fi" class="auto-height-frame" src="https://kidkuiecon-tech.github.io/em_fi/?embed=1" title="FI Returns" scrolling="no"></iframe>
       </div>
     </section>
 
     <section id="tab-rates" class="tab-panel">
       <div class="module-frame">
-        <iframe id="frame-rates" src="https://kidkuiecon-tech.github.io/em-govbond/" title="Rates and Bond"></iframe>
+        <iframe id="frame-rates" class="auto-height-frame" src="https://kidkuiecon-tech.github.io/em-govbond/?embed=1" title="EM Rates and Bond" scrolling="no"></iframe>
       </div>
     </section>
 
@@ -331,12 +462,12 @@ const tabMeta = {
     href: 'https://kidkuiecon-tech.github.io/em-wfii/'
   },
   fi: {
-    title: 'Fixed Income Index',
+    title: 'FI Returns',
     desc: 'EM Fixed Income returns, composition and duration',
     href: 'https://kidkuiecon-tech.github.io/em_fi/'
   },
   rates: {
-    title: 'Rates & Bond',
+    title: 'EM Rates & Bond',
     desc: 'Government bond yields, yield curves, total returns and FX-adjusted performance',
     href: 'https://kidkuiecon-tech.github.io/em-govbond/'
   },
@@ -382,6 +513,143 @@ function initFromHash() {
   if (tabMeta[tab]) openTab(tab);
   else openTab('macro');
 }
+
+
+window.addEventListener("message", function(event) {
+  const data = event.data || {};
+  if (data.type !== "em-dashboard-resize") return;
+
+  const frame = document.getElementById("frame-" + data.dashboard);
+  if (!frame) return;
+
+  const height = Number(data.height);
+  if (!Number.isFinite(height) || height < 300) return;
+
+  frame.style.height = Math.ceil(height) + "px";
+  const wrapper = frame.closest(".module-frame");
+  if (wrapper) wrapper.style.minHeight = Math.ceil(height) + "px";
+});
+
+
+(function setupFundFlowsAutoHeight(){
+  const frame = document.getElementById("frame-flows");
+  if (!frame) return;
+
+  let timer = null;
+  let observer = null;
+
+  function injectNoScrollStyle(doc){
+    if (!doc || doc.getElementById("em-parent-no-scroll-style")) return;
+
+    const style = doc.createElement("style");
+    style.id = "em-parent-no-scroll-style";
+    style.textContent = `
+      html, body {
+        height:auto !important;
+        min-height:0 !important;
+        max-height:none !important;
+        overflow:visible !important;
+        scrollbar-width:none !important;
+        -ms-overflow-style:none !important;
+      }
+
+      html::-webkit-scrollbar,
+      body::-webkit-scrollbar,
+      *::-webkit-scrollbar {
+        display:none !important;
+        width:0 !important;
+        height:0 !important;
+      }
+
+      .table-wrap,
+      .selector-box,
+      .series-list,
+      .main,
+      .dashboard,
+      .app,
+      .container {
+        max-height:none !important;
+        overflow:visible !important;
+      }
+
+      header,
+      .toolbar {
+        position:relative !important;
+        top:auto !important;
+      }
+    `;
+    doc.head.appendChild(style);
+  }
+
+  function resizeFlows(){
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      try {
+        const doc = frame.contentDocument || frame.contentWindow.document;
+        if (!doc) return;
+
+        injectNoScrollStyle(doc);
+
+        const height = Math.ceil(Math.max(
+          doc.documentElement.scrollHeight,
+          doc.body ? doc.body.scrollHeight : 0,
+          doc.documentElement.getBoundingClientRect().height,
+          doc.body ? doc.body.getBoundingClientRect().height : 0
+        ));
+
+        if (height > 400) {
+          frame.style.height = height + "px";
+          frame.style.minHeight = height + "px";
+
+          const wrapper = frame.closest(".module-frame");
+          if (wrapper) {
+            wrapper.style.height = "auto";
+            wrapper.style.minHeight = height + "px";
+            wrapper.style.overflow = "hidden";
+          }
+        }
+      } catch (err) {
+        // This works after deployment because the pages share the same GitHub Pages origin.
+        // Keep scrolling disabled on the iframe itself if the browser blocks document access.
+        frame.style.overflow = "hidden";
+      }
+    }, 80);
+  }
+
+  frame.addEventListener("load", () => {
+    resizeFlows();
+
+    try {
+      const doc = frame.contentDocument || frame.contentWindow.document;
+      if (doc && window.ResizeObserver) {
+        if (observer) observer.disconnect();
+        observer = new ResizeObserver(resizeFlows);
+        observer.observe(doc.documentElement);
+        if (doc.body) observer.observe(doc.body);
+      }
+
+      if (doc && window.MutationObserver) {
+        const mutationObserver = new MutationObserver(resizeFlows);
+        mutationObserver.observe(doc.documentElement, {
+          childList:true,
+          subtree:true,
+          attributes:true,
+          characterData:true
+        });
+      }
+
+      doc.addEventListener("click", resizeFlows);
+      doc.addEventListener("change", resizeFlows);
+    } catch (err) {}
+
+    setTimeout(resizeFlows, 300);
+    setTimeout(resizeFlows, 1000);
+    setTimeout(resizeFlows, 2500);
+  });
+
+  window.addEventListener("resize", resizeFlows);
+})();
+
 
 window.addEventListener('hashchange', initFromHash);
 initFromHash();
