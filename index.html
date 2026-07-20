@@ -377,6 +377,31 @@ body {
   height:0 !important;
 }
 
+
+/* Opinions iframe integration */
+#tab-opinions,
+#tab-opinions .module-frame,
+#frame-opinions {
+  overflow:visible !important;
+  scrollbar-width:none !important;
+  -ms-overflow-style:none !important;
+}
+
+#frame-opinions {
+  width:100% !important;
+  min-height:900px;
+  border:0 !important;
+  display:block !important;
+}
+
+#tab-opinions::-webkit-scrollbar,
+#tab-opinions .module-frame::-webkit-scrollbar,
+#frame-opinions::-webkit-scrollbar {
+  display:none !important;
+  width:0 !important;
+  height:0 !important;
+}
+
 </style>
 </head>
 <body>
@@ -413,7 +438,7 @@ body {
     <span>Fund Flows → external repo em-wfii</span>
     <span>FI Returns → external repo em_fi</span>
     <span>EM Rates &amp; Bond → external repo em-govbond</span>
-    <span>Opinions → opinions.html</span>
+    <span>Opinions → external repo em-opinion</span>
   </section>
 
   <main class="content">
@@ -443,7 +468,7 @@ body {
 
     <section id="tab-opinions" class="tab-panel">
       <div class="module-frame">
-        <iframe id="frame-opinions" src="opinions.html" title="Opinions"></iframe>
+        <iframe id="frame-opinions" class="auto-height-frame" src="https://kidkuiecon-tech.github.io/em-opinion/?embed=1" title="Opinions" scrolling="no"></iframe>
       </div>
     </section>
   </main>
@@ -473,8 +498,8 @@ const tabMeta = {
   },
   opinions: {
     title: 'Opinions',
-    desc: 'Strategy views, country calls and risk watchlist',
-    href: 'opinions.html'
+    desc: 'Monthly TAA narrative and strategy opinions',
+    href: 'https://kidkuiecon-tech.github.io/em-opinion/'
   }
 };
 
