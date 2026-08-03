@@ -356,6 +356,31 @@ body {
 }
 
 
+/* FI Returns Decomposition iframe integration */
+#tab-fi-decomp,
+#tab-fi-decomp .module-frame,
+#frame-fi-decomp {
+  overflow:visible !important;
+  scrollbar-width:none !important;
+  -ms-overflow-style:none !important;
+}
+
+#frame-fi-decomp {
+  width:100% !important;
+  min-height:900px;
+  border:0 !important;
+  display:block !important;
+}
+
+#tab-fi-decomp::-webkit-scrollbar,
+#tab-fi-decomp .module-frame::-webkit-scrollbar,
+#frame-fi-decomp::-webkit-scrollbar {
+  display:none !important;
+  width:0 !important;
+  height:0 !important;
+}
+
+
 /* Fund Flows iframe: remove nested scrollbars */
 #tab-flows,
 #tab-flows .module-frame,
@@ -413,12 +438,13 @@ body {
     <nav class="nav">
       <div class="brand">
         <div class="brand-title">EM Strategy Monitor</div>
-        <div class="brand-sub">Macro • Fund Flows • FI Returns • EM Rates &amp; Bond • Opinions</div>
+        <div class="brand-sub">Macro • Fund Flows • FI Returns • FI Returns Decomposition • EM Rates &amp; Bond • Opinions</div>
       </div>
       <div class="tabs" role="tablist">
         <button class="tab-btn active" data-tab="macro" onclick="openTab('macro')">Macro</button>
         <button class="tab-btn" data-tab="flows" onclick="openTab('flows')">Fund Flows</button>
         <button class="tab-btn" data-tab="fi" onclick="openTab('fi')">FI Returns</button>
+        <button class="tab-btn" data-tab="fi-decomp" onclick="openTab('fi-decomp')">FI Returns Decomposition</button>
         <button class="tab-btn" data-tab="rates" onclick="openTab('rates')">EM Rates &amp; Bond</button>
         <button class="tab-btn" data-tab="opinions" onclick="openTab('opinions')">Opinions</button>
       </div>
@@ -440,6 +466,7 @@ body {
     <span><b>Routing:</b> Macro → external repo em-macro</span>
     <span>Fund Flows → external repo em-wfii</span>
     <span>FI Returns → external repo em_fi</span>
+    <span>FI Returns Decomposition → external repo em-fi-decompose</span>
     <span>EM Rates &amp; Bond → external repo em-govbond</span>
     <span>Opinions → external repo em-opinion</span>
   </section>
@@ -460,6 +487,12 @@ body {
     <section id="tab-fi" class="tab-panel">
       <div class="module-frame">
         <iframe id="frame-fi" class="auto-height-frame" data-base-src="https://kidkuiecon-tech.github.io/em_fi/?embed=1" src="about:blank" title="FI Returns" scrolling="no"></iframe>
+      </div>
+    </section>
+
+    <section id="tab-fi-decomp" class="tab-panel">
+      <div class="module-frame">
+        <iframe id="frame-fi-decomp" class="auto-height-frame" data-base-src="https://kidkuiecon-tech.github.io/em-fi-decompose/?embed=1" src="about:blank" title="FI Returns Decomposition" scrolling="no"></iframe>
       </div>
     </section>
 
@@ -511,6 +544,11 @@ const tabMeta = {
     title: 'FI Returns',
     desc: 'EM Fixed Income returns, composition and duration',
     href: 'https://kidkuiecon-tech.github.io/em_fi/'
+  },
+  'fi-decomp': {
+    title: 'FI Returns Decomposition',
+    desc: 'Historical spread, carry, rates effect and residual decomposition',
+    href: 'https://kidkuiecon-tech.github.io/em-fi-decompose/'
   },
   rates: {
     title: 'EM Rates & Bond',
