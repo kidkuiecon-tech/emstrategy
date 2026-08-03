@@ -4,6 +4,9 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>EM Strategy Monitor</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
 <style>
 :root {
   --navy:#0b1f3a;
@@ -444,37 +447,55 @@ body {
   <main class="content">
     <section id="tab-macro" class="tab-panel active">
       <div class="module-frame">
-        <iframe id="frame-macro" class="auto-height-frame" scrolling="no" src="https://kidkuiecon-tech.github.io/em-macro/?embed=1" title="Macro Economic Overview" scrolling="no"></iframe>
+        <iframe id="frame-macro" class="auto-height-frame" scrolling="no" data-base-src="https://kidkuiecon-tech.github.io/em-macro/?embed=1" src="about:blank" title="Macro Economic Overview" scrolling="no"></iframe>
       </div>
     </section>
 
     <section id="tab-flows" class="tab-panel">
       <div class="module-frame">
-        <iframe id="frame-flows" class="auto-height-frame" src="https://kidkuiecon-tech.github.io/em-wfii/?embed=1" title="Fund Flows" scrolling="no"></iframe>
+        <iframe id="frame-flows" class="auto-height-frame" data-base-src="https://kidkuiecon-tech.github.io/em-wfii/?embed=1" src="about:blank" title="Fund Flows" scrolling="no"></iframe>
       </div>
     </section>
 
     <section id="tab-fi" class="tab-panel">
       <div class="module-frame">
-        <iframe id="frame-fi" class="auto-height-frame" src="https://kidkuiecon-tech.github.io/em_fi/?embed=1" title="FI Returns" scrolling="no"></iframe>
+        <iframe id="frame-fi" class="auto-height-frame" data-base-src="https://kidkuiecon-tech.github.io/em_fi/?embed=1" src="about:blank" title="FI Returns" scrolling="no"></iframe>
       </div>
     </section>
 
     <section id="tab-rates" class="tab-panel">
       <div class="module-frame">
-        <iframe id="frame-rates" class="auto-height-frame" src="https://kidkuiecon-tech.github.io/em-govbond/?embed=1" title="EM Rates and Bond" scrolling="no"></iframe>
+        <iframe id="frame-rates" class="auto-height-frame" data-base-src="https://kidkuiecon-tech.github.io/em-govbond/?embed=1" src="about:blank" title="EM Rates and Bond" scrolling="no"></iframe>
       </div>
     </section>
 
     <section id="tab-opinions" class="tab-panel">
       <div class="module-frame">
-        <iframe id="frame-opinions" class="auto-height-frame" src="https://kidkuiecon-tech.github.io/em-opinion/?embed=1" title="Opinions" scrolling="no"></iframe>
+        <iframe id="frame-opinions" class="auto-height-frame" data-base-src="https://kidkuiecon-tech.github.io/em-opinion/?embed=1" src="about:blank" title="Opinions" scrolling="no"></iframe>
       </div>
     </section>
   </main>
 </div>
 
 <script>
+// Change this value whenever you publish a new official dataset.
+// Everyone opening the shared link will request the newly published version
+// instead of a stale browser/CDN-cached iframe.
+const PUBLISHED_DATA_VERSION = '2026-08-03-01';
+
+function versionedUrl(baseUrl, forceRefresh = false) {
+  const url = new URL(baseUrl);
+  url.searchParams.set('dataVersion', PUBLISHED_DATA_VERSION);
+  if (forceRefresh) url.searchParams.set('_refresh', Date.now().toString());
+  return url.toString();
+}
+
+function loadPublishedDashboards() {
+  document.querySelectorAll('iframe[data-base-src]').forEach(frame => {
+    frame.src = versionedUrl(frame.dataset.baseSrc);
+  });
+}
+
 const tabMeta = {
   macro: {
     title: 'Macro Economic Overview',
@@ -529,7 +550,8 @@ function reloadActive() {
   const frame = document.getElementById('frame-' + active);
 
   if (frame) {
-    frame.src = frame.src;
+    const baseUrl = frame.dataset.baseSrc || frame.src;
+    frame.src = versionedUrl(baseUrl, true);
   }
 }
 
@@ -677,6 +699,7 @@ window.addEventListener("message", function(event) {
 
 
 window.addEventListener('hashchange', initFromHash);
+loadPublishedDashboards();
 initFromHash();
 </script>
 </body>
