@@ -332,73 +332,50 @@ body {
 }
 
 
-/* FI iframe: single-scroll integration */
+/* EM FI Returns + Decomposition: single page scroll, no nested iframe scroll */
 #tab-fi,
-#tab-fi .module-frame,
-#frame-fi {
-  overflow:visible !important;
-  scrollbar-width:none !important;
-  -ms-overflow-style:none !important;
-}
-
-#frame-fi {
-  width:100% !important;
-  border:0 !important;
-  display:block !important;
-}
-
-#tab-fi::-webkit-scrollbar,
-#tab-fi .module-frame::-webkit-scrollbar,
-#frame-fi::-webkit-scrollbar {
-  display:none !important;
-  width:0 !important;
-  height:0 !important;
-}
-
-
-/* FI Returns Decomposition iframe integration */
 #tab-fi-decomp,
-#tab-fi-decomp .module-frame,
-#frame-fi-decomp {
+#tab-fi .module-frame,
+#tab-fi-decomp .module-frame {
   overflow:visible !important;
-  scrollbar-width:none !important;
-  -ms-overflow-style:none !important;
 }
 
+#frame-fi,
 #frame-fi-decomp {
   width:100% !important;
+  height:900px;
   min-height:900px;
   border:0 !important;
   display:block !important;
+  overflow:hidden !important;
+  scrollbar-width:none !important;
+  -ms-overflow-style:none !important;
 }
 
-#tab-fi-decomp::-webkit-scrollbar,
-#tab-fi-decomp .module-frame::-webkit-scrollbar,
+#frame-fi::-webkit-scrollbar,
 #frame-fi-decomp::-webkit-scrollbar {
   display:none !important;
   width:0 !important;
   height:0 !important;
 }
 
-
-/* Fund Flows iframe: remove nested scrollbars */
+/* Fund Flows iframe: single-scroll integration, no nested scrollbar */
 #tab-flows,
-#tab-flows .module-frame,
+#tab-flows .module-frame {
+  overflow:visible !important;
+}
+
 #frame-flows {
+  width:100% !important;
+  min-height:1800px;
+  height:1800px;
+  border:0 !important;
+  display:block !important;
   overflow:hidden !important;
   scrollbar-width:none !important;
   -ms-overflow-style:none !important;
 }
 
-#frame-flows {
-  width:100% !important;
-  min-height:900px;
-  border:0 !important;
-  display:block !important;
-}
-
-#tab-flows::-webkit-scrollbar,
-#tab-flows .module-frame::-webkit-scrollbar,
 #frame-flows::-webkit-scrollbar {
   display:none !important;
   width:0 !important;
@@ -438,13 +415,13 @@ body {
     <nav class="nav">
       <div class="brand">
         <div class="brand-title">EM Strategy Monitor</div>
-        <div class="brand-sub">Macro • Fund Flows • FI Returns • FI Returns Decomposition • EM Rates &amp; Bond • Opinions</div>
+        <div class="brand-sub">Macro • Fund Flows • EM FI Returns • EM FI Returns Decomposition • EM Rates &amp; Bond • Opinions</div>
       </div>
       <div class="tabs" role="tablist">
         <button class="tab-btn active" data-tab="macro" onclick="openTab('macro')">Macro</button>
         <button class="tab-btn" data-tab="flows" onclick="openTab('flows')">Fund Flows</button>
-        <button class="tab-btn" data-tab="fi" onclick="openTab('fi')">FI Returns</button>
-        <button class="tab-btn" data-tab="fi-decomp" onclick="openTab('fi-decomp')">FI Returns Decomposition</button>
+        <button class="tab-btn" data-tab="fi" onclick="openTab('fi')">EM FI Returns</button>
+        <button class="tab-btn" data-tab="fi-decomp" onclick="openTab('fi-decomp')">EM FI Returns Decomposition</button>
         <button class="tab-btn" data-tab="rates" onclick="openTab('rates')">EM Rates &amp; Bond</button>
         <button class="tab-btn" data-tab="opinions" onclick="openTab('opinions')">Opinions</button>
       </div>
@@ -465,8 +442,8 @@ body {
   <section class="routebar">
     <span><b>Routing:</b> Macro → external repo em-macro</span>
     <span>Fund Flows → external repo em-wfii</span>
-    <span>FI Returns → external repo em_fi</span>
-    <span>FI Returns Decomposition → external repo em-fi-decompose</span>
+    <span>EM FI Returns → external repo em_fi</span>
+    <span>EM FI Returns Decomposition → external repo em-fi-decompose</span>
     <span>EM Rates &amp; Bond → external repo em-govbond</span>
     <span>Opinions → external repo em-opinion</span>
   </section>
@@ -486,13 +463,13 @@ body {
 
     <section id="tab-fi" class="tab-panel">
       <div class="module-frame">
-        <iframe id="frame-fi" class="auto-height-frame" data-base-src="https://kidkuiecon-tech.github.io/em_fi/?embed=1" src="about:blank" title="FI Returns" scrolling="no"></iframe>
+        <iframe id="frame-fi" class="auto-height-frame" data-base-src="https://kidkuiecon-tech.github.io/em_fi/?embed=1" src="about:blank" title="EM FI Returns" scrolling="no"></iframe>
       </div>
     </section>
 
     <section id="tab-fi-decomp" class="tab-panel">
       <div class="module-frame">
-        <iframe id="frame-fi-decomp" class="auto-height-frame" data-base-src="https://kidkuiecon-tech.github.io/em-fi-decompose/?embed=1" src="about:blank" title="FI Returns Decomposition" scrolling="no"></iframe>
+        <iframe id="frame-fi-decomp" class="auto-height-frame" data-base-src="https://kidkuiecon-tech.github.io/em-fi-decompose/?embed=1" src="about:blank" title="EM FI Returns Decomposition" scrolling="no"></iframe>
       </div>
     </section>
 
@@ -541,12 +518,12 @@ const tabMeta = {
     href: 'https://kidkuiecon-tech.github.io/em-wfii/'
   },
   fi: {
-    title: 'FI Returns',
+    title: 'EM FI Returns',
     desc: 'EM Fixed Income returns, composition and duration',
     href: 'https://kidkuiecon-tech.github.io/em_fi/'
   },
   'fi-decomp': {
-    title: 'FI Returns Decomposition',
+    title: 'EM FI Returns Decomposition',
     desc: 'Historical spread, carry, rates effect and residual decomposition',
     href: 'https://kidkuiecon-tech.github.io/em-fi-decompose/'
   },
@@ -616,18 +593,19 @@ window.addEventListener("message", function(event) {
 });
 
 
-(function setupFundFlowsAutoHeight(){
-  const frame = document.getElementById("frame-flows");
+function setupAutoHeightFrame(frameId, fallbackHeight = 1800) {
+  const frame = document.getElementById(frameId);
   if (!frame) return;
 
   let timer = null;
   let observer = null;
+  let mutationObserver = null;
 
-  function injectNoScrollStyle(doc){
-    if (!doc || doc.getElementById("em-parent-no-scroll-style")) return;
+  function injectNoScrollStyle(doc) {
+    if (!doc || doc.getElementById('em-parent-no-scroll-style')) return;
 
-    const style = doc.createElement("style");
-    style.id = "em-parent-no-scroll-style";
+    const style = doc.createElement('style');
+    style.id = 'em-parent-no-scroll-style';
     style.textContent = `
       html, body {
         height:auto !important;
@@ -639,16 +617,12 @@ window.addEventListener("message", function(event) {
       }
 
       html::-webkit-scrollbar,
-      body::-webkit-scrollbar,
-      *::-webkit-scrollbar {
+      body::-webkit-scrollbar {
         display:none !important;
         width:0 !important;
         height:0 !important;
       }
 
-      .table-wrap,
-      .selector-box,
-      .series-list,
       .main,
       .dashboard,
       .app,
@@ -666,7 +640,7 @@ window.addEventListener("message", function(event) {
     doc.head.appendChild(style);
   }
 
-  function resizeFlows(){
+  function resizeFrame() {
     clearTimeout(timer);
     timer = setTimeout(() => {
       try {
@@ -683,38 +657,42 @@ window.addEventListener("message", function(event) {
         ));
 
         if (height > 400) {
-          frame.style.height = height + "px";
-          frame.style.minHeight = height + "px";
+          frame.style.height = height + 'px';
+          frame.style.minHeight = height + 'px';
+          frame.style.overflow = 'hidden';
 
-          const wrapper = frame.closest(".module-frame");
+          const wrapper = frame.closest('.module-frame');
           if (wrapper) {
-            wrapper.style.height = "auto";
-            wrapper.style.minHeight = height + "px";
-            wrapper.style.overflow = "hidden";
+            wrapper.style.height = 'auto';
+            wrapper.style.minHeight = height + 'px';
+            wrapper.style.overflow = 'visible';
           }
         }
       } catch (err) {
-        // This works after deployment because the pages share the same GitHub Pages origin.
-        // Keep scrolling disabled on the iframe itself if the browser blocks document access.
-        frame.style.overflow = "hidden";
+        frame.style.overflow = 'hidden';
+        frame.style.height = fallbackHeight + 'px';
+        frame.style.minHeight = fallbackHeight + 'px';
       }
     }, 80);
   }
 
-  frame.addEventListener("load", () => {
-    resizeFlows();
+  frame.addEventListener('load', () => {
+    resizeFrame();
 
     try {
       const doc = frame.contentDocument || frame.contentWindow.document;
+
+      if (observer) observer.disconnect();
+      if (mutationObserver) mutationObserver.disconnect();
+
       if (doc && window.ResizeObserver) {
-        if (observer) observer.disconnect();
-        observer = new ResizeObserver(resizeFlows);
+        observer = new ResizeObserver(resizeFrame);
         observer.observe(doc.documentElement);
         if (doc.body) observer.observe(doc.body);
       }
 
       if (doc && window.MutationObserver) {
-        const mutationObserver = new MutationObserver(resizeFlows);
+        mutationObserver = new MutationObserver(resizeFrame);
         mutationObserver.observe(doc.documentElement, {
           childList:true,
           subtree:true,
@@ -723,18 +701,21 @@ window.addEventListener("message", function(event) {
         });
       }
 
-      doc.addEventListener("click", resizeFlows);
-      doc.addEventListener("change", resizeFlows);
+      doc.addEventListener('click', resizeFrame);
+      doc.addEventListener('change', resizeFrame);
     } catch (err) {}
 
-    setTimeout(resizeFlows, 300);
-    setTimeout(resizeFlows, 1000);
-    setTimeout(resizeFlows, 2500);
+    setTimeout(resizeFrame, 300);
+    setTimeout(resizeFrame, 1000);
+    setTimeout(resizeFrame, 2500);
   });
 
-  window.addEventListener("resize", resizeFlows);
-})();
+  window.addEventListener('resize', resizeFrame);
+}
 
+setupAutoHeightFrame('frame-flows', 1800);
+setupAutoHeightFrame('frame-fi', 2200);
+setupAutoHeightFrame('frame-fi-decomp', 2400);
 
 window.addEventListener('hashchange', initFromHash);
 loadPublishedDashboards();
